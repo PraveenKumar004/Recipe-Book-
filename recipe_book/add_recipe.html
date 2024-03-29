@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe App - Add Recipe</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="add_recipe.html">Add Recipes</a>
+        <a href="favorite_recipes.html">Favorite Recipes</a>
+        <a href="user_profile.html">Profile</a>
+        <a href="login.html">Log Out</a>
+    </div>
+    <nav>
+        <h1>Recipe App - Add Recipe</h1>
+    </nav>
+    <div class="container">
+        <div class="left-column">
+            <h3>Add Recipe</h3>
+
+            <form id="recipe-form">
+                <label for="recipe-name">Name:</label>
+                <input type="text" id="recipe-name" required>
+                <br />
+
+                <label for="recipe-image">Image URL:</label>
+                <input type="text" id="recipe-image" required>
+                <br />
+                <label for="category-select">Category:</label>
+                <select id="category-select" required>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Desserts">Desserts</option>
+                    <option value="Beverages">Beverages</option>
+                </select>
+                <br />
+                <label for="recipe-ingredients">Ingredients:</label>
+                <textarea id="recipe-ingredients" rows="5" required></textarea>
+                <br />
+
+                <label for="recipe-method">Method:</label>
+                <textarea id="recipe-method" rows="5" required></textarea>
+                <br />
+
+                <button type="submit" >Add Recipe</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+<script>
+
+        
+</script>
+
+</body>
+</html>

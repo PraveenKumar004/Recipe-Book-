@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="add_recipe.html">Add Recipes</a>
+        <a href="favorite_recipes.html">Favorite Recipes</a>
+        <a href="user_profile.html">Profile</a>
+        <a href="login.html">Log Out</a>
+    </div>
+    <div class="container">
+        <h2>User Profile</h2>
+        <div id="profileDetails">
+        </div>
+        <button id="editButton">Edit Profile</button>
+        <button id="saveButton" style="display: none;">Save</button>
+    </div>
+
+    <script>
+        var email = sessionStorage.getItem("email");
+    
+        function displayUserProfile() {
+            var userData;
+            for (var key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    var storedDataString = localStorage.getItem(key);
+                    if (storedDataString) {
+                        try {
+                            var storedData = JSON.parse(storedDataString);
+                            if (storedData.email === email) {
+                                userData = storedData;
+                                break;
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON:", error);
+                        }
+                    }
+                }
+            }
+    
+            if (userData) {
+                var profileDetailsHTML = `
+                    <center><img src="${userData.profilePicture}" id="profilePicture" alt="Profile Picture" style="max-width: 200px;"></center>
+                    <label for="profilePicture">Profile Picture URL</label>
+                    <input type="url" id="profilePictureUrl" name="profilePictureUrl" value="${userData.profilePicture}" disabled>
+    
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="${userData.username}" disabled>
+    
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="${userData.email}" disabled>
+    
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" value="${userData.password}" disabled>
+    
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile" value="${userData.mobile}" disabled>
+                `;
+    
+                document.getElementById('profileDetails').innerHTML = profileDetailsHTML;
+            } else {
+                alert('User data not found in local storage.');
+            }
+        }
+    
+        displayUserProfile();
+    
+        document.getElementById('editButton').addEventListener('click', function() {
+            var inputs = document.querySelectorAll('#profileDetails input');
+            inputs.forEach(input => {
+                input.disabled = false;
+            });
+    
+            document.getElementById('editButton').style.display = 'none';
+            document.getElementById('saveButton').style.display = 'block';
+        });
+    
+        // Function to handle form submission
+        document.getElementById('saveButton').addEventListener('click', function() {
+            var userData;
+            for (var key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    var storedDataString = localStorage.getItem(key);
+                    if (storedDataString) {
+                        try {
+                            var storedData = JSON.parse(storedDataString);
+                            if (storedData.email === email) {
+                                userData = storedData;
+                                break;
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON:", error);
+                        }
+                    }
+                }
+            }
+    
+            userData.username = document.getElementById('username').value;
+            userData.email = document.getElementById('email').value;
+            userData.password = document.getElementById('password').value;
+            userData.mobile = document.getElementById('mobile').value;
+            userData.profilePicture = document.getElementById('profilePictureUrl').value;
+    
+            // Replace profile picture with default if there's an error loading the image
+            var profilePic = document.getElementById('profilePicture');
+            profilePic.onerror = function() {
+                profilePic.src = 'https://t4.ftcdn.net/jpg/00/97/00/09/360_F_97000908_wwH2goIihwrMoeV9QF3BW6HtpsVFaNVM.jpg';
+            };
+    
+            // Update the profile picture
+            profilePic.src = userData.profilePicture;
+    
+            // Disable input fields after saving
+            var inputs = document.querySelectorAll('#profileDetails input');
+            inputs.forEach(input => {
+                input.disabled = true;
+            });
+    
+            document.getElementById('editButton').style.display = 'block';
+            document.getElementById('saveButton').style.display = 'none';
+        });
+    </script>
+    
+</body>
+</html>

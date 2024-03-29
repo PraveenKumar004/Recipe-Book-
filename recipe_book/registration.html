@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <label for="profilePicture">Profile Picture URL</label>
+            <input type="url" id="profilePicture" name="profilePicture">
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" name="mobile" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            
+
+            
+
+            <input type="submit" value="Register">
+        </form>
+        <p>I Alerady  have account</p>
+        <a href="login.html">Click Here</a>
+        <div id="error" class="error" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+    
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var mobile = document.getElementById("mobile").value;
+            var profilePicture = document.getElementById("profilePicture").value || "https://t4.ftcdn.net/jpg/00/97/00/09/360_F_97000908_wwH2goIihwrMoeV9QF3BW6HtpsVFaNVM.jpg"; // Default image URL if not provided
+    
+            var emailExists = false;
+            for (var key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    var storedDataString = localStorage.getItem(key);
+                    if (storedDataString) {
+                        try {
+                            var storedData = JSON.parse(storedDataString);
+                            if (storedData.email === email) {
+                                emailExists = true;
+                                break;
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON:", error);
+                        }
+                    }
+                }
+            }
+    
+            if (emailExists) {
+                document.getElementById("error").innerText = "Email already exists!";
+                document.getElementById("error").style.display = "block";
+            } else {
+                localStorage.setItem(username, JSON.stringify({ username: username, email: email, password: password, mobile: mobile, profilePicture: profilePicture }));
+                localStorage.setItem('loggedInUser', email); // Set logged in user
+                alert("Registration successful!");
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+    
+    
+</body>
+</html>

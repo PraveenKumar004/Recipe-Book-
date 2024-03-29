@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recipe App - Recipes List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="add_recipe.html">Add Recipes</a>
+        <a href="favorite_recipes.html">Favorite Recipes</a>
+        <a href="user_profile.html">Profile</a>
+        <a id="show-recipes-btn">My Recipes</a>
+        <a href="login.html">Log Out</a>
+    </div>
+
+    <div class="hii">
+        <label for="search-box" style="padding: 10px;">Search:</label>
+        <div id="search-section" style="width: 500px;">
+            <input type="text" id="search-box" placeholder="Search...." width="100%">
+        </div>
+
+        <div id="category-dropdown" style="display: flex; ">
+            <h3 style="padding-left: 200px; padding-bottom: 10px;">Filter by Category</h3>
+            <select id="category-select" style="margin: 10px;">
+                <option value="All">All</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Desserts">Desserts</option>
+                <option value="Beverages">Beverages</option>
+            </select>
+        </div>
+    </div>
+    <div class="right-column">
+        <div id="welcome-section">
+        </div>
+        <div class="container">
+
+            <div id="recipe-list">
+            </div>
+
+        </div>
+        <div id="no-recipes">You have no recipes.</div>
+
+    </div>
+
+    </div>
+
+
+
+    <script src="script.js"></script>
+    <script>
+
+        var email = sessionStorage.getItem("email");
+        console.log(sessionStorage.getItem("recipes"))
+        console.log(email)
+        if (email) {
+            for (var key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    var storedData = JSON.parse(localStorage.getItem(key));
+                    if (storedData.email === email) {
+                        var welcomeSection = document.getElementById("welcome-section");
+                        welcomeSection.innerHTML = "<h2>Welcome, " + storedData.username + "!</h2>";
+                        break;
+                    }
+                }
+            }
+        } else {
+            window.location.href = "login.html";
+        }
+
+
+    </script>
+</body>
+
+</html>
